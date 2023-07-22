@@ -1,13 +1,14 @@
 ﻿using API.Data;
+using API.DTOs;
 using API.Entities;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
 namespace API.Controllers
 {
-    [Route("api/[controller]")]
-    [ApiController]
-    public class UsersController : ControllerBase
+    [Authorize]
+    public class UsersController : BaseApiController
     {
         private readonly DataContext _dataContext;
 
@@ -17,18 +18,27 @@ namespace API.Controllers
         }
 
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<AppUser>>> GetUsers()
+        public async Task<ActionResult<IEnumerable<UserInfoDto>>> GetUsers()
         {
-            var users = await _dataContext.Users.ToListAsync();
+            var users = await _dataContext.Users.Select(x => MapToUserInfo(x)).ToListAsync();
             return Ok(users);
         }
 
         [HttpGet("{id}")]
-        public async Task<ActionResult<AppUser>> GetUser(int id)
+        public async Task<ActionResult<UserInfoDto>> GetUser(int id)
         {
             var user = await _dataContext.Users.FindAsync(id);
             if (user == null) return NotFound();
-            return Ok(user);
+            return Ok(MapToUserInfo(user));
+        }
+
+        private static UserInfoDto MapToUserInfo(AppUser user)
+        {
+            return new UserInfoDto
+            {
+                Id = user.Id,
+                Username = user.UserName
+            };
         }
     }
 }
