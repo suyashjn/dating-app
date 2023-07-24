@@ -1,0 +1,45 @@
+<nav class="navbar fixed-top navbar-expand-lg bg-body-tertiary shadow-sm">
+  <div class="container-fluid">
+    <a class="navbar-brand text-primary" href="#">Dating App</a>
+    <button class="navbar-toggler" type="button" (click)="isCollapsed = !isCollapsed">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarSupportedContent" [ngbCollapse]="isCollapsed">
+      <ul ngbNav class="navbar-nav me-auto mb-2 mb-lg-0">
+        <ng-container *ngIf="accountService.currentUser$ | async">
+          <li ngbNavItem class="nav-item">
+            <a class="nav-link" href="#">Matches</a>
+          </li>
+          <li ngbNavItem class="nav-item">
+            <a class="nav-link" href="#">Messages</a>
+          </li>
+          <li ngbNavItem class="nav-item nav-item-end">
+            <a class="nav-link" href="#">Lists</a>
+          </li>
+        </ng-container>
+      </ul>
+
+      <ul ngbNav class="navbar-nav">
+        <li
+          class="nav-item dropdown justify-content-end"
+          *ngIf="accountService.currentUser$ | async as user"
+          ngbDropdown
+        >
+          <a class="dropdown-toggle nav-link" ngbDropdownToggle> Welcome, {{ user.username }} </a>
+
+          <ul class="dropdown-menu" ngbDropdownMenu>
+            <li ngbNavItem>
+              <a class="dropdown-item" ngbDropdownItem href="#">Edit profile</a>
+            </li>
+            <li ngbNavItem>
+              <a class="dropdown-item" ngbDropdownItem (click)="isCollapsed = true; logout()">Logout</a>
+            </li>
+          </ul>
+        </li>
+        <li ngbNavItem class="nav-item" *ngIf="!(accountService.currentUser$ | async)">
+          <a class="nav-link" (click)="isCollapsed = true" routerLink="/login"> Login </a>
+        </li>
+      </ul>
+    </div>
+  </div>
+</nav>

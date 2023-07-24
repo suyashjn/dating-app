@@ -1,1 +1,22 @@
 /* You can add global styles to this file, and also import other style files */
+.bg-img-container {
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center center;
+  height: 100vh;
+}
+
+.img-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100vh;
+  backdrop-filter: blur(5px); /* Apply the blur effect */
+  z-index: 1; /* Ensure the overlay is on top of the background image */
+}
+
+.center-content {
+  display: flex;
+  align-items: center;
+}
