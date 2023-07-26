@@ -1,6 +1,7 @@
 import { Component } from "@angular/core";
 import { AccountService } from "../_services/account.service";
 import { Router } from "@angular/router";
+import { ToastrService } from "ngx-toastr";
 
 @Component({
   selector: "app-register",
@@ -10,15 +11,16 @@ import { Router } from "@angular/router";
 export class RegisterComponent {
   model: any = {};
 
-  constructor(private _accountService: AccountService, private _router: Router) {}
+  constructor(
+    private _router: Router,
+    private _accountService: AccountService,
+    private _toastrService: ToastrService
+  ) {}
 
   register() {
     this._accountService.register(this.model).subscribe({
-      next: (res) => {
-        console.log(res);
-        this._router.navigateByUrl("/home");
-      },
-      error: (err) => console.log(err),
+      next: (_) => this._router.navigateByUrl("/user"),
+      error: (err) => this._toastrService.error(err.error),
     });
   }
 }

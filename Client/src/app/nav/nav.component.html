@@ -1,6 +1,6 @@
 <nav class="navbar fixed-top navbar-expand-lg bg-body-tertiary shadow-sm">
   <div class="container-fluid">
-    <a class="navbar-brand text-primary" href="#">Dating App</a>
+    <a class="navbar-brand text-primary" routerLink="/">Dating App</a>
     <button class="navbar-toggler" type="button" (click)="isCollapsed = !isCollapsed">
       <span class="navbar-toggler-icon"></span>
     </button>
@@ -8,13 +8,13 @@
       <ul ngbNav class="navbar-nav me-auto mb-2 mb-lg-0">
         <ng-container *ngIf="accountService.currentUser$ | async">
           <li ngbNavItem class="nav-item">
-            <a class="nav-link" href="#">Matches</a>
+            <a class="nav-link" routerLink="/user/members" routerLinkActive="active">Matches</a>
           </li>
           <li ngbNavItem class="nav-item">
-            <a class="nav-link" href="#">Messages</a>
+            <a class="nav-link" routerLink="/user/messages" routerLinkActive="active">Messages</a>
           </li>
           <li ngbNavItem class="nav-item nav-item-end">
-            <a class="nav-link" href="#">Lists</a>
+            <a class="nav-link" routerLink="/user/lists" routerLinkActive="active">Lists</a>
           </li>
         </ng-container>
       </ul>
