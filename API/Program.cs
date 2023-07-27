@@ -1,4 +1,5 @@
 using API.Extensions;
+using API.Middlewares;
 
 namespace API
 {
@@ -27,6 +28,8 @@ namespace API
             }
 
             app.UseHttpsRedirection();
+
+            app.UseMiddleware<ExceptionMiddleware>();
 
             app.UseCors(builder => builder
                 .WithOrigins("https://localhost:4200")
