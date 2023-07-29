@@ -19,7 +19,6 @@ export class HomeComponent implements OnInit {
   getUsers() {
     this._httpClient.get("https://localhost:5001/api/users").subscribe({
       next: (res: any) => (this.users = res),
-      error: (err) => console.log(err),
     });
   }
 

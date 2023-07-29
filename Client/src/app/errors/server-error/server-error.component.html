@@ -1,0 +1,11 @@
+<div class="container-fluid content-container">
+  <h4>Internal Server Error</h4>
+  <ng-container *ngIf="error">
+    <hr>
+    <h5 class="text-danger mb-3">Error: {{ error.message }}</h5>
+    <h6>Following is the stack trace -</h6>
+    <code style="background-color: whitesmoke; color: red">{{ error.details }}</code>
+    <hr />
+    <p>Note - Refreshing the page will make error disappear.</p>
+  </ng-container>
+</div>
