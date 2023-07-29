@@ -8,13 +8,19 @@
       <ul ngbNav class="navbar-nav me-auto mb-2 mb-lg-0">
         <ng-container *ngIf="accountService.currentUser$ | async">
           <li ngbNavItem class="nav-item">
-            <a class="nav-link" routerLink="/user/members" routerLinkActive="active">Matches</a>
+            <a class="nav-link" (click)="isCollapsed = true" routerLink="/user/members" routerLinkActive="active"
+              >Matches</a
+            >
           </li>
           <li ngbNavItem class="nav-item">
-            <a class="nav-link" routerLink="/user/messages" routerLinkActive="active">Messages</a>
+            <a class="nav-link" (click)="isCollapsed = true" routerLink="/user/messages" routerLinkActive="active"
+              >Messages</a
+            >
           </li>
           <li ngbNavItem class="nav-item nav-item-end">
-            <a class="nav-link" routerLink="/user/lists" routerLinkActive="active">Lists</a>
+            <a class="nav-link" (click)="isCollapsed = true" routerLink="/user/lists" routerLinkActive="active"
+              >Lists</a
+            >
           </li>
         </ng-container>
       </ul>
