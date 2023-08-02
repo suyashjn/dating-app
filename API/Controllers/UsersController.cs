@@ -1,44 +1,33 @@
-﻿using API.Data;
-using API.DTOs;
-using API.Entities;
+﻿using API.DTOs;
+using API.Interfaces;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
 
 namespace API.Controllers
 {
     [Authorize]
     public class UsersController : BaseApiController
     {
-        private readonly DataContext _dataContext;
+        private readonly IUserRepository _userRepository;
 
-        public UsersController(DataContext dataContext)
+        public UsersController(IUserRepository userRepository)
         {
-            _dataContext = dataContext ?? throw new ArgumentNullException(nameof(dataContext));
+            _userRepository = userRepository ?? throw new ArgumentNullException(nameof(userRepository));
         }
 
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<UserInfoDto>>> GetUsers()
+        public async Task<ActionResult<IEnumerable<MemberDto>>> GetUsers()
         {
-            var users = await _dataContext.Users.Select(x => MapToUserInfo(x)).ToListAsync();
+            var users = await _userRepository.GetMembersAsync();
             return Ok(users);
         }
 
-        [HttpGet("{id}")]
-        public async Task<ActionResult<UserInfoDto>> GetUser(int id)
+        [HttpGet("{username}")]
+        public async Task<ActionResult<MemberDto>> GetUser(string username)
         {
-            var user = await _dataContext.Users.FindAsync(id);
+            var user = await _userRepository.GetMemberAsync(username);
             if (user == null) return NotFound();
-            return Ok(MapToUserInfo(user));
-        }
-
-        private static UserInfoDto MapToUserInfo(AppUser user)
-        {
-            return new UserInfoDto
-            {
-                Id = user.Id,
-                Username = user.UserName
-            };
+            return Ok(user);
         }
     }
 }
